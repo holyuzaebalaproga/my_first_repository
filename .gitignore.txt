@@ -1,0 +1,5 @@
+vacancies.csv
+
+.idea
+
+venv
