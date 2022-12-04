@@ -1,7 +1,3 @@
-# def formatter(row), получает словарь сформированный из строки CSV-файла со стандартными значениями, 
-# возвращает новый словарь со всем необходимым форматированием и подстановками, предназначенным для печати. 
-# Эта функция используется в функции print_vacancies.
-
 import csv
 import re
 
@@ -15,7 +11,7 @@ def csv_reader(file_name):
     return (name_row, file_lines)
 
 
-def csv_ﬁler(reader, list_naming):
+def csv_filer(reader, list_naming):
     vacancies_all = []
     for i in reader: #берем 1 лист-строчку
         if len(list_naming) == len(i) and '' not in i: #сохраняем только те строчки, где нет пустых пунктов и подходящая длина
