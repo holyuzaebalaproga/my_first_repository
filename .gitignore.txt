@@ -1,5 +1,5 @@
 vacancies.csv
 
-.idea
+.idea/
 
-venv
+venv/
