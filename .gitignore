@@ -2,4 +2,9 @@ vacancies.csv
 
 .idea/
 
-venv/
+venv/.idea
+vacancies.csv
+venv
+.idea
+vacancies.csv
+venv
