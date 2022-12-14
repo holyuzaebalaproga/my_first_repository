@@ -4,7 +4,7 @@ from print_table import get_table
 
 
 def main_function():
-    main_input = input('Введите вид вывода вакансий(ООП или Таблица): ')
+    main_input = input('Введите тип вывода вакансий(ООП или Таблица): ')
     if main_input != "ООП" and main_input != "Таблица":
         print("Введён неправильный тип вывода")
         return
