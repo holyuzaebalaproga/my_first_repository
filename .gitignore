@@ -1,13 +1,11 @@
 vacancies.csv
 
 .idea/
-
+/.idea
 venv/.idea
-vacancies.csv
+
 venv
-.idea
-vacancies.csv
-venv
-__pycache__
-__pycache__
-__pycache__/__pycache__/
+
+/__pycache__
+__pycache__/
+
