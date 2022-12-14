@@ -45,7 +45,7 @@ def print_vacancies(data_vacancies, dic_naming):
     rus_vacancies = []
     for i in range(len(data_vacancies)):  # i - номер словарика в data_vacancies
         rus_dict = {}
-        for key, value in vacancies[i].items():  # пара ключ-значение
+        for key, value in data_vacancies[i].items():  # пара ключ-значение
             if key in dic_naming:
                 rus_dict[dic_naming[key]] = value
         rus_vacancies.append(rus_dict)  # заменены все ключи на русские
@@ -128,23 +128,28 @@ def formatter(row):  # работа с ОДНИМ словариком
     return new_row
 
 
-my_file = 'vacancies.csv'
-if os.stat(my_file).st_size == 0:
-    print('Пустой файл')
-else:
-    rdr = csv_reader(my_file)
-    file_lines = rdr[1]
-    name_row = rdr[0]
-    if len(file_lines) > 0:
-        vacancies = csv_filer(file_lines, name_row)
-
-        eng_dic = {'name': 'Название', 'description': 'Описание', 'key_skills': 'Навыки',
-                   'experience_id': 'Опыт работы',
-                   'premium': 'Премиум-вакансия', 'employer_name': 'Компания',
-                   'salary_from': 'Нижняя граница вилки оклада',
-                   'salary_to': 'Верхняя граница вилки оклада', 'salary_gross': 'Оклад указан до вычета налогов',
-                   'salary_currency': 'Идентификатор валюты оклада', 'area_name': 'Название региона',
-                   'published_at': 'Дата и время публикации вакансии'}
-        print_vacancies(vacancies, eng_dic)
+def get_table():
+    my_file = 'vacancies.csv'
+    if os.stat(my_file).st_size == 0:
+        print('Пустой файл')
     else:
-        print('Нет данных')
+        rdr = csv_reader(my_file)
+        file_lines = rdr[1]
+        name_row = rdr[0]
+        if len(file_lines) > 0:
+            vacancies = csv_filer(file_lines, name_row)
+
+            eng_dic = {'name': 'Название', 'description': 'Описание', 'key_skills': 'Навыки',
+                       'experience_id': 'Опыт работы',
+                       'premium': 'Премиум-вакансия', 'employer_name': 'Компания',
+                       'salary_from': 'Нижняя граница вилки оклада',
+                       'salary_to': 'Верхняя граница вилки оклада', 'salary_gross': 'Оклад указан до вычета налогов',
+                       'salary_currency': 'Идентификатор валюты оклада', 'area_name': 'Название региона',
+                       'published_at': 'Дата и время публикации вакансии'}
+            print_vacancies(vacancies, eng_dic)
+        else:
+            print('Нет данных')
+
+
+if __name__ == '__main__':
+    get_table()
