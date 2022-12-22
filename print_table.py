@@ -5,6 +5,17 @@ from prettytable import PrettyTable
 
 
 def csv_reader(file_name):
+    """
+    Принимает имя csv файла. Возвращает кортеж, где первый элемент - лист заголовков файла, второй - лист листов
+    со строками файла
+
+    Args:
+        file_name(str): Имя файла
+    Returns:
+        tuple:
+            list(str): лист заголовков файла
+            list(list(str)): лист листов с значениями строк файла
+    """
     file_lines = []
     with open(file_name, encoding="utf-8-sig") as f:
         file_reader = csv.reader(f)
@@ -15,6 +26,19 @@ def csv_reader(file_name):
 
 
 def csv_filer(reader, list_naming):
+    """
+    Работает с каждым элементом листа листов, где каждый лист  - информация о професии(вакансии). Удаляет лист, если в нем
+    есть пустое значение. Для каждого листа с профессией создает словарь, где ключ - определение элемента информации,
+    взятый из листа с заголовками, значение - значение данной профессии. Для ключа key_skills значение - лист. Очищает
+    значения от html-тегов, двойных и более пробелов. Заменяет bool-значения на русские аналоги. Возвращает лист
+    словарей.
+
+    Args:
+        reader(list(list(str)): Лист листов со значениями строк csv-файла
+        list_naming(list(str)): Заголовки csv-файла
+    Returns:
+        list(dict(Any, list[str] | str)): Список словарей каждой вакансии
+    """
     vacancies_all = []
     for i in reader:  # берем 1 лист-строчку
         if len(list_naming) == len(i) and '' not in i:
@@ -42,6 +66,20 @@ def csv_filer(reader, list_naming):
 
 
 def print_vacancies(data_vacancies, dic_naming):
+    """
+    Переводит ключи словарей на русский, исп. словарь, принимаемый в кач-ве аргумента. Добавляет в начало каждого
+    словаря пару: №: порядковый номер вакансии. Оформляет оклад в виде: "нижняя граница вилки оклада - верхняя граница
+    вилки оклада валюта (С вычетом налогов или без)". Убирает время публикации, оформляет дату в виде дд.мм.ггг. Каждый
+    навык выводит с новой строки через запятую. Форматирует словари, исп. функцию formatter. Печатает вакансии в виде
+    таблицы, где ключи словарей - заголовки, каждая вакансия - новая строчка.
+
+    Args:
+        data_vacancies(list(dict(Any, list[str] | str))): Список словарей вакансий
+        dic_naming(dict(str, str)): Словарь перевода ключей на русский
+
+    Print:
+        Таблица, где ключи словарей - заголовки, каждая вакансия - новая строчка.
+    """
     rus_vacancies = []
     for i in range(len(data_vacancies)):  # i - номер словарика в data_vacancies
         rus_dict = {}
@@ -79,7 +117,7 @@ def print_vacancies(data_vacancies, dic_naming):
                 continue
             if key == 'Навыки':
                 value = ', '.join(value)
-                d[key] = '\n'.join(str(value) for value in value.split((', ')))
+                d[key] = '\n'.join(str(value) for value in value.split(', '))
                 continue
             d[key] = value
         new_vac.append(d)
@@ -104,6 +142,15 @@ def print_vacancies(data_vacancies, dic_naming):
 
 
 def formatter(row):  # работа с ОДНИМ словариком
+    """
+    Работает с одним словарем. Сокращает значения до 100 символов, добавляя "...". Опыт работы переводит на русский
+    с помощью словаря exper_rus. Аналогично с валютой, исп. словарь currency_rus.
+
+    Args:
+        row (dict(Any, list[str] | str)): Словарь для вакансии
+    Returns:
+        row (dict(Any, list[str] | str)): Обработанный словарь вакансии
+    """
     exper_rus = {'noExperience': 'Нет опыта', 'between1And3': 'От 1 года до 3 лет', 'between3And6': 'От 3 до 6 лет',
                  'moreThan6': 'Более 6 лет'}
     currency_rus = {"AZN": "Манаты", "BYR": "Белорусские рубли", "EUR": "Евро", "GEL": "Грузинский лари",
@@ -129,6 +176,13 @@ def formatter(row):  # работа с ОДНИМ словариком
 
 
 def get_table():
+    """
+    Используя csv-файл, проверяет наличие в нем данных. Если в файле нет строк, выводит "Пустой файл". Если в файле
+    одна строка, выводит "Нет данных". Иначе запускает функцию print_vacancies.
+
+    returns:
+        str | print_vacancies
+    """
     my_file = 'vacancies.csv'
     if os.stat(my_file).st_size == 0:
         print('Пустой файл')

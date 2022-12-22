@@ -4,14 +4,54 @@ from var_dump import var_dump
 
 
 class DataSet(object):
+    """
+    Класс для представления основного объекта данных в виде списка вакансий и имени csv файла.
+    Attributes:
+        file_name(str): Имя csv файла
+        vacancies_objects(list): Лист из объектов-вакансий
+    """
     def __init__(self, name, listik):
+        """
+        Инициализирует объект Datset.
+        Args:
+            file_name(str): Имя csv файла
+            vacancies_objects(list): Лист из объектов-вакансий
+        """
         self.file_name = name
         self.vacancies_objects = listik
 
 
 class Vacancy(object):
+    """
+    Класс для представления вакансии.
+
+    Attributes:
+        name(str): Имя вакансии(профессии)
+        description(str): Описание
+        key_skills(list): Список ключевых кавыков
+        experience_id(str): Опыт работы
+        premium(str): Премиум-вакансия или нет
+        employer_name(str): Имя компании работодателя
+        salary(object): Объект Salary, состоящий из верхней, нижней вилок оклада, учетом налогов или нет и валюты
+        area_name(str): Название региона
+        published_at(str): Дата и время публикации
+    """
     def __init__(self, name, description, key_skills, experience_id, premium, employer_name, salary, area_name,
                  published_at):
+        """
+        Инициализирует объект Vacanсy.
+
+    Args:
+        name(str): Имя вакансии(профессии)
+        description(str): Описание
+        key_skills(list): Список ключевых кавыков
+        experience_id(str): Опыт работы
+        premium(str): Премиум-вакансия или нет
+        employer_name(str): Имя компании работодателя
+        salary(object): Объект Salary, состоящий из верхней, нижней вилок оклада, учетом налогов или нет и валюты
+        area_name(str): Название региона
+        published_at(str): Дата и время публикации
+        """
         self.name = name
         self.description = description
         self.key_skills = key_skills
@@ -24,7 +64,24 @@ class Vacancy(object):
 
 
 class Salary(object):
+    """
+    Класс для представления зарплаты.
+
+    Attributes:
+        salary_from (str or int or float): Нижняя граница вилки оклада
+        salary_to (str or int or float): Верхняя граница вилки оклада
+        salary_gross(str): С вычетом налогов(TRUE или FALSE)
+        salary_currency(str): Валюта оклада
+    """
     def __init__(self, salary_from, salary_to, salary_gross, salary_currency):
+        """
+        Инициализирует объект Salary.
+        Args:
+            salary_from (str or int or float): Нижняя граница вилки оклада
+            salary_to (str or int or float): Верхняя граница вилки оклада
+            salary_gross(str): С вычетом налогов(TRUE или FALSE)
+            salary_currency(str): Валюта оклада
+        """
         self.salary_from = salary_from
         self.salary_to = salary_to
         self.salary_gross = salary_gross
@@ -32,6 +89,12 @@ class Salary(object):
 
 
 def csv_parser(file_name):  # формируется список словарей, делает строку с n листом, убирает тэги
+    """
+    Формирует список словарей из заданного (имени) файла. Строку с переносом строки делает листом. Каждое значение
+    очищает от html-тэгов, приводя к читаемому виду
+    Returns:
+        list: Лист словарей из вакансий
+    """
     with open(file_name, 'r', encoding='utf-8-sig') as f:
         r_csv = csv.reader(f)
         try:
@@ -66,12 +129,17 @@ def csv_parser(file_name):  # формируется список словаре
 
 
 def get_OOP():
+    """
+        Просит пользователя ввести имя csv файла. Данные из файла обрабатывает и выводит в виде вакансий в ООП.
+        Returns:
+            object: Печатает данные в виде объектов var_dump
+    """
     file_name = input('Введите название файла: ')  # 'vacancies.csv'
-    filt_input = input('Введите параметр фильтрации: ')
-    sort_param = input('Введите параметр сортировки: ')
-    sort_order = input('Обратный порядок сортировки (Да / Нет): ')
-    len_of_vac = input('Введите диапазон вывода: ').split(' ')
-    segments = input('Введите требуемые столбцы: ').split(', ')
+    # filt_input = input('Введите параметр фильтрации: ')
+    # sort_param = input('Введите параметр сортировки: ')
+    # sort_order = input('Обратный порядок сортировки (Да / Нет): ')
+    # len_of_vac = input('Введите диапазон вывода: ').split(' ')
+    # segments = input('Введите требуемые столбцы: ').split(', ')
 
     vacancies = csv_parser(file_name)
     vacancies_objects = []
